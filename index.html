@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>software-engineering · 24PCA402</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#fbfaf6;
+    --panel:#ffffff;
+    --ink:#1b1f24;
+    --muted:#6c7380;
+    --line:#e1e4e8;
+    --add:#1a7f37;
+    --add-bg:#e9f6ee;
+    --del:#cf222e;
+    --del-bg:#fdeceb;
+    --accent:#8250df;
+    --accent-bg:#f4eefe;
+    --mono:'JetBrains Mono', monospace;
+    --sans:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:32px 20px 90px; background:var(--paper); color:var(--ink);
+    font-family:var(--sans);
+  }
+  .container{max-width:1080px; margin:0 auto;}
+
+  /* ---------- repo header ---------- */
+  .breadcrumb{
+    font-family:var(--mono); font-size:0.82rem; color:var(--muted); margin-bottom:14px;
+  }
+  .breadcrumb span{color:var(--ink); font-weight:600;}
+  .breadcrumb i{font-size:0.7rem; margin:0 6px; color:var(--line);}
+
+  .repo-card{
+    border:1px solid var(--line); border-radius:8px; background:var(--panel);
+    padding:26px 28px; box-shadow:0 1px 2px rgba(27,31,36,0.04);
+  }
+  .repo-title{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  }
+  .repo-title h1{
+    font-family:var(--mono); font-weight:600; font-size:1.5rem; margin:0; color:var(--accent);
+  }
+  .repo-title .visibility{
+    font-family:var(--mono); font-size:0.68rem; border:1px solid var(--line); color:var(--muted);
+    padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:0.06em;
+  }
+  .repo-desc{ color:var(--muted); margin:10px 0 18px; max-width:640px; line-height:1.55; }
+
+  .repo-stats{
+    display:flex; flex-wrap:wrap; gap:22px; font-family:var(--mono); font-size:0.8rem; color:var(--muted);
+    border-top:1px solid var(--line); padding-top:16px;
+  }
+  .repo-stats .stat{display:flex; align-items:center; gap:6px;}
+  .repo-stats .dot{width:10px;height:10px;border-radius:50%; display:inline-block;}
+  .lang-py{background:#3572A5;} .lang-md{background:#083fa1;}
+
+  /* ---------- notice ---------- */
+  .notice{
+    margin-top:18px; border:1px solid var(--del); background:var(--del-bg);
+    padding:13px 16px; border-radius:6px; display:flex; gap:12px; align-items:flex-start;
+    font-size:0.88rem;
+  }
+  .notice i{color:var(--del); margin-top:2px;}
+  .notice strong{color:var(--ink);}
+  .notice p{margin:0; color:#7a4b48;}
+
+  /* ---------- clone buttons ---------- */
+  .quick-links{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:22px 0 8px; }
+  .btn{
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    padding:12px; border-radius:6px; text-decoration:none; font-weight:600;
+    font-family:var(--mono); font-size:0.83rem; border:1px solid transparent;
+    transition:transform .15s ease, filter .15s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); filter:brightness(0.97); }
+  .btn-syllabus{ background:var(--add); color:#fff; }
+  .btn-book{ background:var(--accent); color:#fff; }
+
+  /* ---------- section headers ---------- */
+  .section-title{ display:flex; align-items:center; gap:10px; margin:46px 0 18px; }
+  .section-title i{ color:var(--accent); font-size:1rem; }
+  .section-title h2{
+    font-family:var(--mono); font-size:1.05rem; margin:0; font-weight:600; color:var(--ink);
+  }
+  .section-title .count{
+    font-family:var(--mono); font-size:0.72rem; color:var(--muted); background:var(--line);
+    padding:2px 9px; border-radius:999px;
+  }
+  .section-title::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+  /* ---------- git log ---------- */
+  .git-log{
+    list-style:none; margin:0; padding:0; position:relative;
+    border:1px solid var(--line); border-radius:8px; background:var(--panel); overflow:hidden;
+  }
+  .git-log::before{
+    content:""; position:absolute; top:0; bottom:0; left:29px; width:2px; background:var(--line);
+  }
+  .commit-row{
+    position:relative; display:flex; align-items:center; gap:16px;
+    padding:13px 18px 13px 52px; border-bottom:1px solid var(--line);
+    text-decoration:none; color:inherit;
+  }
+  .commit-row:last-child{ border-bottom:none; }
+  .commit-row:hover{ background:#faf9f5; }
+  .commit-row .node{
+    position:absolute; left:22px; top:50%; transform:translateY(-50%);
+    width:14px; height:14px; border-radius:50%; background:var(--panel);
+    border:2.5px solid var(--accent); z-index:1;
+  }
+  .commit-row:hover .node{ background:var(--accent); }
+  .commit-row .hash{
+    font-family:var(--mono); font-size:0.78rem; color:var(--muted); width:64px; flex-shrink:0;
+  }
+  .commit-row .msg{ font-size:0.92rem; color:var(--ink); flex:1; }
+  .commit-row .unit-no{
+    font-family:var(--mono); font-size:0.7rem; color:var(--accent); background:var(--accent-bg);
+    padding:2px 8px; border-radius:4px; flex-shrink:0;
+  }
+  .commit-row .goto{ color:var(--muted); font-size:0.8rem; flex-shrink:0; }
+  .commit-row:hover .goto{ color:var(--accent); }
+
+  /* ---------- lab / PR cards ---------- */
+  .lab-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(330px,1fr)); gap:18px;
+  }
+  .lab-card{
+    border:1px solid var(--line); border-radius:8px; background:var(--panel);
+    overflow:hidden; display:flex; flex-direction:column;
+  }
+  .lab-card .file-bar{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:12px 16px; border-bottom:1px solid var(--line); background:#f6f8fa;
+  }
+  .lab-card .filename{
+    font-family:var(--mono); font-size:0.82rem; color:var(--ink); font-weight:600;
+    display:flex; align-items:center; gap:8px;
+  }
+  .lab-card .filename i{ color:var(--muted); }
+  .lab-card .tag{
+    font-family:var(--mono); font-size:0.65rem; text-transform:uppercase; letter-spacing:0.06em;
+    padding:2px 8px; border-radius:999px; background:var(--accent-bg); color:var(--accent);
+    white-space:nowrap;
+  }
+  .lab-card .body{ padding:16px; }
+  .lab-card p.desc{ margin:0 0 12px; color:var(--muted); font-size:0.87rem; line-height:1.5; }
+
+  .diffstat{ display:flex; align-items:center; gap:8px; margin-bottom:14px; font-family:var(--mono); font-size:0.74rem; }
+  .diffstat .add-txt{ color:var(--add); }
+  .diffstat .del-txt{ color:var(--del); }
+  .diffstat .bar{ display:flex; width:70px; height:7px; border-radius:2px; overflow:hidden; background:var(--line); }
+  .diffstat .bar .a{ background:var(--add); height:100%; }
+  .diffstat .bar .d{ background:var(--del); height:100%; }
+
+  .code-box{
+    border:1px solid var(--line); border-left:3px solid var(--add); border-radius:5px;
+    overflow:hidden; margin-bottom:14px;
+  }
+  .code-box .diff-head{
+    font-family:var(--mono); font-size:0.68rem; color:var(--add); background:var(--add-bg);
+    padding:5px 12px; letter-spacing:0.04em;
+  }
+  .code-box pre{ margin:0; max-height:180px; overflow-y:auto; font-size:0.78rem; }
+
+  .btn-view{
+    display:inline-flex; align-items:center; gap:7px; align-self:flex-start;
+    padding:7px 13px; border:1px solid var(--line); border-radius:6px;
+    font-family:var(--mono); font-size:0.75rem; color:var(--ink); text-decoration:none;
+    background:#fff;
+  }
+  .btn-view:hover{ border-color:var(--accent); color:var(--accent); }
+  .lab-card .body > .btn-view{ margin-top:auto; }
+
+  footer{
+    text-align:center; margin-top:60px; font-family:var(--mono); font-size:0.75rem; color:var(--muted);
+  }
+  footer .heart{ color:var(--del); }
+
+  @media (max-width:640px){
+    .quick-links{ grid-template-columns:1fr; }
+    .repo-stats{ gap:14px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="breadcrumb"><span>NIPE</span> <i class="fas fa-chevron-right"></i> <span>24PCA402</span> <i class="fas fa-chevron-right"></i> software-engineering</div>
+
+  <div class="repo-card">
+    <div class="repo-title">
+      <i class="fas fa-code-branch" style="color:var(--muted)"></i>
+      <h1>software-engineering</h1>
+      <span class="visibility">public</span>
+    </div>
+    <p class="repo-desc">Principles, models, and practices for building software that survives contact with real requirements — process models, design, testing, and delivery, taught by Dr. Praveen N.</p>
+    <div class="repo-stats">
+      <span class="stat"><i class="fas fa-code-commit"></i> 12 units</span>
+      <span class="stat"><i class="fas fa-flask"></i> 12 labs</span>
+      <span class="stat"><span class="dot lang-py"></span> Python</span>
+      <span class="stat"><i class="fas fa-scale-balanced"></i> Academic use</span>
+      <span class="stat"><i class="fas fa-university"></i> NITTE (Deemed to be University), Mangaluru</span>
+    </div>
+  </div>
+
+  <div class="notice">
+    <i class="fas fa-triangle-exclamation"></i>
+    <p><strong>Note:</strong> Please use your <strong>Nitte email ID</strong> to access the Google Drive files.</p>
+  </div>
+
+  <div class="quick-links">
+    <a href="#" target="_blank" class="btn btn-syllabus"><i class="fas fa-file-pdf"></i> Download Syllabus</a>
+    <a href="#" target="_blank" class="btn btn-book"><i class="fas fa-book"></i> Course Textbook</a>
+  </div>
+
+  <div class="section-title"><i class="fas fa-code-commit"></i><h2>Unit Topics</h2><span class="count">12 commits</span></div>
+  <ul class="git-log">
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">a3f9c1e</span><span class="msg">Introduction to Software Engineering</span><span class="unit-no">Unit 01</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">7d2b840</span><span class="msg">Software Process Models — Waterfall, Iterative, Spiral</span><span class="unit-no">Unit 02</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">f18e6aa</span><span class="msg">Agile Methodologies & Scrum</span><span class="unit-no">Unit 03</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">c604d7b</span><span class="msg">Requirements Engineering & SRS</span><span class="unit-no">Unit 04</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">9b1a2f3</span><span class="msg">Software Design Principles</span><span class="unit-no">Unit 05</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">e5c0891</span><span class="msg">UML & Object-Oriented Modeling</span><span class="unit-no">Unit 06</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">2af73dc</span><span class="msg">Design Patterns</span><span class="unit-no">Unit 07</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">b8e441f</span><span class="msg">Software Architecture & Styles</span><span class="unit-no">Unit 08</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">d02c9a7</span><span class="msg">Software Testing Fundamentals</span><span class="unit-no">Unit 09</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">61fbe23</span><span class="msg">Software Project Management & Estimation</span><span class="unit-no">Unit 10</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">a94d6b0</span><span class="msg">Software Quality Assurance & Metrics</span><span class="unit-no">Unit 11</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">3ff10ec</span><span class="msg">Maintenance, Configuration Management & DevOps</span><span class="unit-no">Unit 12</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+  </ul>
+
+  <div class="section-title"><i class="fas fa-flask"></i><h2>Lab Exercises</h2><span class="count">12 open</span></div>
+  <div class="lab-grid">
+
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-file-lines"></i>srs/library_system.md</span><span class="tag">Requirements</span></div>
+      <div class="body">
+        <p class="desc">Draft an IEEE-format SRS for a sample library system: functional & non-functional requirements, constraints, use cases.</p>
+        <div class="diffstat"><span class="add-txt">+64</span><span class="del-txt">−0</span><span class="bar"><span class="a" style="width:100%"></span></span></div>
+        <a href="SE/srs_template.docx" class="btn-view" download><i class="fas fa-download"></i> Get template</a>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-diagram-project"></i>uml/class_diagram.puml</span><span class="tag">Modeling</span></div>
+      <div class="body">
+        <p class="desc">Model a library management system with use case, class, and sequence diagrams.</p>
+        <div class="diffstat"><span class="add-txt">+48</span><span class="del-txt">−0</span><span class="bar"><span class="a" style="width:100%"></span></span></div>
+        <a href="SE/uml_exercise.pdf" class="btn-view" download><i class="fas fa-download"></i> Exercise sheet</a>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fab fa-python"></i>patterns/singleton.py</span><span class="tag">Creational</span></div>
+      <div class="body">
+        <p class="desc">Implement the Singleton and Factory patterns; compare instantiation control vs. object creation flexibility.</p>
+        <div class="diffstat"><span class="add-txt">+38</span><span class="del-txt">−6</span><span class="bar"><span class="a" style="width:86%"></span><span class="d" style="width:14%"></span></span></div>
+        <div class="code-box">
+          <div class="diff-head">+ NEW FILE · 38 lines</div>
+          <pre class="language-python"><code class="language-python">class Singleton:
+    _instance = None
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance</code></pre>
+        </div>
+        <a href="SE/singleton_factory.py" class="btn-view" download><i class="fas fa-download"></i> View file</a>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fab fa-python"></i>patterns/observer.py</span><span class="tag">Behavioral</span></div>
+      <div class="body">
+        <p class="desc">Build a publish–subscribe notification system using the Observer pattern.</p>
+        <div class="diffstat"><span class="add-txt">+52</span><span class="del-txt">−4</span><span class="bar"><span class="a" style="width:93%"></span><span class="d" style="width:7%"></span></span></div>
+        <div class="code-box">
+          <div class="diff-head">+ NEW FILE · 52 lines</div>
+          <pre class="language-python"><code class="language-python">class Subject:
+    def __init__(self):
+        self._observers = []
+    def attach(self, obs):
+        self._observers.append(obs)
+    def notify(self, event):
+        for obs in self._observers:
+            obs.update(event)</code></pre>
+        </div>
+        <a href="SE/observer.py" class="btn-view" download><i class="fas fa-download"></i> View file</a>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fab fa-python"></i>tests/test_calculator.py</span><span class="tag">Testing</span></div>
+      <div class="body">
+        <p class="desc">Write unit tests for a calculator module with PyTest, including edge cases and mocks.</p>
+        <div class="diffstat"><span class="add-txt">+41</span><span class="del-txt">−0</span><span class="bar"><span class="a" style="width:100%"></span></span></div>
+        <a href="SE/test_calculator.py" class="btn-view" download><i class="fas fa-download"></i> View file</a>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fab fa-python"></i>tests/cyclomatic.py</span><span class="tag">White-box</span></div>
+      <div class="body">
+        <p class="desc">Apply basis path testing using McCabe's Cyclomatic Complexity, V(G) = E − N + 2, on a sample function.</p>
+        <div class="diffstat"><span class="add-txt">+29</span><span class="del-txt">−0</span><span class="bar"><span class="a" style="width:100%"></span></span></div>
+        <a href="SE/cyclomatic_complexity.py" class="btn-view" download><i class="fas fa-download"></i> View file</a>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-calculator"></i>estimation/cocomo.py</span><span class="tag">Metrics</span></div>
+      <div class="body">
+        <p class="desc">Estimate effort, schedule, and cost for a sample project using the Basic COCOMO model.</p>
+        <div class="diffstat"><span class="add-txt">+33</span><span class="del-txt">−0</span><span class="bar"><span class="a" style="width:100%"></span></span></div>
+        <a href="SE/cocomo_calculator.py" class="btn-view" download><i class="fas fa-download"></i> View file</a>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-code-branch"></i>guides/git_workflow.md</span><span class="tag">Version Control</span></div>
+      <div class="body">
+        <p class="desc">Practice branching, merging, and resolving conflicts using a feature-branch workflow.</p>
+        <div class="diffstat"><span class="add-txt">+22</span><span class="del-txt">−0</span><span class="bar"><span class="a" style="width:100%"></span></span></div>
+        <a href="SE/git_workflow_guide.pdf" class="btn-view" download><i class="fas fa-download"></i> Get guide</a>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-list-check"></i>agile/sprint_backlog.xlsx</span><span class="tag">Agile</span></div>
+      <div class="body">
+        <p class="desc">Break a product backlog into user stories and plan a two-week sprint with story points.</p>
+        <div class="diffstat"><span class="add-txt">+19</span><span class="del-txt">−0</span><span class="bar"><span class="a" style="width:100%"></span></span></div>
+        <a href="SE/sprint_template.xlsx" class="btn-view" download><i class="fas fa-download"></i> Get template</a>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-sitemap"></i>architecture/case_study.md</span><span class="tag">Architecture</span></div>
+      <div class="body">
+        <p class="desc">Compare architectural styles by redesigning a monolithic sample app into services; evaluate coupling & cohesion.</p>
+        <div class="diffstat"><span class="add-txt">+56</span><span class="del-txt">−31</span><span class="bar"><span class="a" style="width:64%"></span><span class="d" style="width:36%"></span></span></div>
+        <a href="SE/architecture_case_study.pdf" class="btn-view" download><i class="fas fa-download"></i> Case study</a>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-gears"></i>.github/workflows/ci.yml</span><span class="tag">CI / CD</span></div>
+      <div class="body">
+        <p class="desc">Set up a basic continuous integration pipeline that runs the test suite on every push.</p>
+        <div class="diffstat"><span class="add-txt">+17</span><span class="del-txt">−0</span><span class="bar"><span class="a" style="width:100%"></span></span></div>
+        <a href="SE/ci_pipeline.yml" class="btn-view" download><i class="fas fa-download"></i> View config</a>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-broom"></i>legacy/refactor_target.py</span><span class="tag">Maintenance</span></div>
+      <div class="body">
+        <p class="desc">Identify code smells in a legacy snippet and refactor it while preserving observable behavior.</p>
+        <div class="diffstat"><span class="add-txt">+27</span><span class="del-txt">−45</span><span class="bar"><span class="a" style="width:37%"></span><span class="d" style="width:63%"></span></span></div>
+        <a href="SE/refactoring_exercise.py" class="btn-view" download><i class="fas fa-download"></i> View file</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>README.md · NIPE — NITTE (Deemed to be University), Mangaluru</footer>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

@@ -54,9 +54,14 @@
   }
   .repo-desc{ color:var(--muted); margin:10px 0 18px; max-width:640px; line-height:1.55; }
 
-  .sections-disabled > * {
-    display: none;
+  .sections-disabled a,
+  .sections-disabled .commit-row,
+  .sections-disabled .btn-view {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: default;
   }
+    .sections-disabled .commit-row { text-decoration: none; }
 
   .repo-stats{
     display:flex; flex-wrap:wrap; gap:22px; font-family:var(--mono); font-size:0.8rem; color:var(--muted);
@@ -248,8 +253,8 @@
     <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">3ff10ec</span><span class="msg">Maintenance, Configuration Management & DevOps</span><span class="unit-no">Unit 12</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
   </ul>
 
-  <div class="section-title" style="display:none;"><i class="fas fa-flask"></i><h2>Lab Exercises</h2><span class="count">12 open</span></div>
-  <div class="lab-grid" style="display:none;">
+  <div class="section-title"><i class="fas fa-flask"></i><h2>Lab Exercises</h2><span class="count">12 open</span></div>
+  <div class="lab-grid">
 
     <div class="lab-card">
       <div class="file-bar"><span class="filename"><i class="fas fa-file-lines"></i>srs/library_system.md</span><span class="tag">Requirements</span></div>

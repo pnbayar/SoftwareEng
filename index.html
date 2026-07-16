@@ -54,6 +54,10 @@
   }
   .repo-desc{ color:var(--muted); margin:10px 0 18px; max-width:640px; line-height:1.55; }
 
+  .sections-disabled > * {
+    display: none;
+  }
+
   .repo-stats{
     display:flex; flex-wrap:wrap; gap:22px; font-family:var(--mono); font-size:0.8rem; color:var(--muted);
     border-top:1px solid var(--line); padding-top:16px;
@@ -217,12 +221,13 @@
     </div>
   </div>
 
-  <div class="notice">
-    <i class="fas fa-triangle-exclamation"></i>
-    <p><strong>Note:</strong> Please use your <strong>Nitte email ID</strong> to access the Google Drive files.</p>
-  </div>
+  <div class="sections-disabled">
+    <div class="notice">
+      <i class="fas fa-triangle-exclamation"></i>
+      <p><strong>Note:</strong> Please use your <strong>Nitte email ID</strong> to access the Google Drive files.</p>
+    </div>
 
-  <div class="quick-links">
+    <div class="quick-links">
     <a href="#" target="_blank" class="btn btn-syllabus"><i class="fas fa-file-pdf"></i> Download Syllabus</a>
     <a href="#" target="_blank" class="btn btn-book"><i class="fas fa-book"></i> Course Textbook</a>
   </div>
@@ -243,8 +248,8 @@
     <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">3ff10ec</span><span class="msg">Maintenance, Configuration Management & DevOps</span><span class="unit-no">Unit 12</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
   </ul>
 
-  <div class="section-title"><i class="fas fa-flask"></i><h2>Lab Exercises</h2><span class="count">12 open</span></div>
-  <div class="lab-grid">
+  <div class="section-title" style="display:none;"><i class="fas fa-flask"></i><h2>Lab Exercises</h2><span class="count">12 open</span></div>
+  <div class="lab-grid" style="display:none;">
 
     <div class="lab-card">
       <div class="file-bar"><span class="filename"><i class="fas fa-file-lines"></i>srs/library_system.md</span><span class="tag">Requirements</span></div>

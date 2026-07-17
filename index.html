@@ -54,14 +54,17 @@
   }
   .repo-desc{ color:var(--muted); margin:10px 0 18px; max-width:640px; line-height:1.55; }
 
-  .sections-disabled a,
-  .sections-disabled .commit-row,
-  .sections-disabled .btn-view {
+  .lab-card.disabled,
+  .lab-card.disabled .btn-view,
+  .lab-card.disabled a,
+  .commit-row.disabled {
     pointer-events: none;
     opacity: 0.5;
     cursor: default;
   }
-    .sections-disabled .commit-row { text-decoration: none; }
+  .lab-card.disabled .btn-view:hover { border-color: var(--line); color: var(--ink); }
+  .lab-card.disabled .commit-row,
+  .commit-row.disabled { text-decoration: none; }
 
   .repo-stats{
     display:flex; flex-wrap:wrap; gap:22px; font-family:var(--mono); font-size:0.8rem; color:var(--muted);
@@ -218,7 +221,7 @@
       </p>
     </div>
      <div class="repo-stats" style="background: rgba(0,0,0,0.1); border-top: 1px solid rgba(255,255,255,0.2); border-bottom: none; color: rgba(255,255,255,0.95); padding: 16px 28px;">
-      <span class="stat"><i class="fas fa-code-commit"></i> 12 units</span>
+      <span class="stat"><i class="fas fa-code-commit"></i> 12 chapters</span>
       <span class="stat"><i class="fas fa-flask"></i> 12 labs</span>
       <span class="stat"><span class="dot lang-py"></span> Python</span>
       <span class="stat"><i class="fas fa-scale-balanced"></i> Academic use</span>
@@ -236,22 +239,24 @@
       <i class="fas fa-triangle-exclamation"></i>
       <p><strong>Note:</strong> Please use your <strong>Nitte email ID</strong> to access the Google Drive files.</p>
     </div>
+  </div>
 
-  <div class="section-title"><i class="fas fa-code-commit"></i><h2>Unit Topics</h2><span class="count">12 commits</span></div>
+  <div class="section-title"><i class="fas fa-code-commit"></i><h2>Chapter Topics</h2><span class="count">12 commits</span></div>
   <ul class="git-log">
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">a3f9c1e</span><span class="msg">Introduction to Software Engineering</span><span class="unit-no">Unit 01</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">7d2b840</span><span class="msg">Software Process Models — Waterfall, Iterative, Spiral</span><span class="unit-no">Unit 02</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">f18e6aa</span><span class="msg">Agile Methodologies & Scrum</span><span class="unit-no">Unit 03</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">c604d7b</span><span class="msg">Requirements Engineering & SRS</span><span class="unit-no">Unit 04</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">9b1a2f3</span><span class="msg">Software Design Principles</span><span class="unit-no">Unit 05</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">e5c0891</span><span class="msg">UML & Object-Oriented Modeling</span><span class="unit-no">Unit 06</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">2af73dc</span><span class="msg">Design Patterns</span><span class="unit-no">Unit 07</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">b8e441f</span><span class="msg">Software Architecture & Styles</span><span class="unit-no">Unit 08</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">d02c9a7</span><span class="msg">Software Testing Fundamentals</span><span class="unit-no">Unit 09</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">61fbe23</span><span class="msg">Software Project Management & Estimation</span><span class="unit-no">Unit 10</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">a94d6b0</span><span class="msg">Software Quality Assurance & Metrics</span><span class="unit-no">Unit 11</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">3ff10ec</span><span class="msg">Maintenance, Configuration Management & DevOps</span><span class="unit-no">Unit 12</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">a3f9c1e</span><span class="msg">Introduction to Software Engineering</span><span class="unit-no">Chapter 01</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">7d2b840</span><span class="msg">Software Process Models — Waterfall, Iterative, Spiral</span><span class="unit-no">Chapter 02</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">f18e6aa</span><span class="msg">Agile Methodologies & Scrum</span><span class="unit-no">Chapter 03</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">c604d7b</span><span class="msg">Requirements Engineering & SRS</span><span class="unit-no">Chapter 04</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">9b1a2f3</span><span class="msg">Software Design Principles</span><span class="unit-no">Chapter 05</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">e5c0891</span><span class="msg">UML & Object-Oriented Modeling</span><span class="unit-no">Chapter 06</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">2af73dc</span><span class="msg">Design Patterns</span><span class="unit-no">Chapter 07</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">b8e441f</span><span class="msg">Software Architecture & Styles</span><span class="unit-no">Chapter 08</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">d02c9a7</span><span class="msg">Software Testing Fundamentals</span><span class="unit-no">Chapter 09</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">61fbe23</span><span class="msg">Software Project Management & Estimation</span><span class="unit-no">Chapter 10</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">a94d6b0</span><span class="msg">Software Quality Assurance & Metrics</span><span class="unit-no">Chapter 11</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
+    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">3ff10ec</span><span class="msg">Maintenance, Configuration Management & DevOps</span><span class="unit-no">Chapter 12</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
   </ul>
+</div>
 
   <div class="section-title"><i class="fas fa-flask"></i><h2>Lab Exercises</h2><span class="count">12 open</span></div>
   <div class="lab-grid">
@@ -265,8 +270,7 @@
       </div>
     </div>
 
-  <div class="sections-disabled">
-    <div class="lab-card">
+    <div class="lab-card disabled">
       <div class="file-bar"><span class="filename"><i class="fas fa-diagram-project"></i>uml/class_diagram.puml</span><span class="tag">Modeling</span></div>
       <div class="body">
         <p class="desc">Model a library management system with use case, class, and sequence diagrams.</p>
@@ -275,7 +279,7 @@
       </div>
     </div>
 
-    <div class="lab-card">
+    <div class="lab-card disabled">
       <div class="file-bar"><span class="filename"><i class="fab fa-python"></i>patterns/singleton.py</span><span class="tag">Creational</span></div>
       <div class="body">
         <p class="desc">Implement the Singleton and Factory patterns; compare instantiation control vs. object creation flexibility.</p>
@@ -293,7 +297,7 @@
       </div>
     </div>
 
-    <div class="lab-card">
+    <div class="lab-card disabled">
       <div class="file-bar"><span class="filename"><i class="fab fa-python"></i>patterns/observer.py</span><span class="tag">Behavioral</span></div>
       <div class="body">
         <p class="desc">Build a publish–subscribe notification system using the Observer pattern.</p>
@@ -313,7 +317,7 @@
       </div>
     </div>
 
-    <div class="lab-card">
+    <div class="lab-card disabled">
       <div class="file-bar"><span class="filename"><i class="fab fa-python"></i>tests/test_calculator.py</span><span class="tag">Testing</span></div>
       <div class="body">
         <p class="desc">Write unit tests for a calculator module with PyTest, including edge cases and mocks.</p>
@@ -322,7 +326,7 @@
       </div>
     </div>
 
-    <div class="lab-card">
+    <div class="lab-card disabled">
       <div class="file-bar"><span class="filename"><i class="fab fa-python"></i>tests/cyclomatic.py</span><span class="tag">White-box</span></div>
       <div class="body">
         <p class="desc">Apply basis path testing using McCabe's Cyclomatic Complexity, V(G) = E − N + 2, on a sample function.</p>
@@ -331,7 +335,7 @@
       </div>
     </div>
 
-    <div class="lab-card">
+    <div class="lab-card disabled">
       <div class="file-bar"><span class="filename"><i class="fas fa-calculator"></i>estimation/cocomo.py</span><span class="tag">Metrics</span></div>
       <div class="body">
         <p class="desc">Estimate effort, schedule, and cost for a sample project using the Basic COCOMO model.</p>
@@ -340,7 +344,7 @@
       </div>
     </div>
 
-    <div class="lab-card">
+    <div class="lab-card disabled">
       <div class="file-bar"><span class="filename"><i class="fas fa-code-branch"></i>guides/git_workflow.md</span><span class="tag">Version Control</span></div>
       <div class="body">
         <p class="desc">Practice branching, merging, and resolving conflicts using a feature-branch workflow.</p>
@@ -349,7 +353,7 @@
       </div>
     </div>
 
-    <div class="lab-card">
+    <div class="lab-card disabled">
       <div class="file-bar"><span class="filename"><i class="fas fa-list-check"></i>agile/sprint_backlog.xlsx</span><span class="tag">Agile</span></div>
       <div class="body">
         <p class="desc">Break a product backlog into user stories and plan a two-week sprint with story points.</p>
@@ -358,7 +362,7 @@
       </div>
     </div>
 
-    <div class="lab-card">
+    <div class="lab-card disabled">
       <div class="file-bar"><span class="filename"><i class="fas fa-sitemap"></i>architecture/case_study.md</span><span class="tag">Architecture</span></div>
       <div class="body">
         <p class="desc">Compare architectural styles by redesigning a monolithic sample app into services; evaluate coupling & cohesion.</p>
@@ -367,7 +371,7 @@
       </div>
     </div>
 
-    <div class="lab-card">
+    <div class="lab-card disabled">
       <div class="file-bar"><span class="filename"><i class="fas fa-gears"></i>.github/workflows/ci.yml</span><span class="tag">CI / CD</span></div>
       <div class="body">
         <p class="desc">Set up a basic continuous integration pipeline that runs the test suite on every push.</p>
@@ -376,7 +380,7 @@
       </div>
     </div>
 
-    <div class="lab-card">
+    <div class="lab-card disabled">
       <div class="file-bar"><span class="filename"><i class="fas fa-broom"></i>legacy/refactor_target.py</span><span class="tag">Maintenance</span></div>
       <div class="body">
         <p class="desc">Identify code smells in a legacy snippet and refactor it while preserving observable behavior.</p>

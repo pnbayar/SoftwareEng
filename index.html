@@ -96,6 +96,44 @@
   .btn-syllabus{ background:var(--add); color:#fff; }
   .btn-book{ background:var(--accent); color:#fff; }
 
+  .study-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;
+    margin:12px 0 24px;
+  }
+  .unit-card{
+    border:1px solid var(--line); border-radius:8px; background:var(--panel);
+    overflow:hidden;
+  }
+  .unit-card .unit-head{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:14px 16px; background:#f6f8fa; border-bottom:1px solid var(--line);
+    font-family:var(--mono); font-size:0.78rem; font-weight:700; color:var(--ink);
+  }
+  .unit-card .unit-head span{
+    color:var(--muted); font-size:0.7rem; font-weight:500;
+  }
+  .unit-card .unit-body{ padding:14px 16px; }
+  .unit-card .unit-body ul{
+    list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;
+  }
+  .unit-card .unit-body a{
+    display:inline-flex; align-items:center; gap:8px; width:100%;
+    padding:8px 10px; border:1px solid var(--line); border-radius:6px;
+    text-decoration:none; color:var(--ink); font-family:var(--mono); font-size:0.74rem;
+    background:#fff;
+  }
+  .unit-card .unit-body a:hover{ border-color:var(--accent); color:var(--accent); }
+  .unit-card .unit-body i{ color:var(--muted); }
+  .unit-card.disabled,
+  .unit-card.disabled .unit-head,
+  .unit-card.disabled .unit-body a {
+    pointer-events: none;
+    opacity: 0.55;
+    cursor: default;
+    filter: grayscale(0.15);
+  }
+  .unit-card.disabled .unit-body a:hover{ border-color:var(--line); color:var(--ink); }
+
   /* ---------- section headers ---------- */
   .section-title{ display:flex; align-items:center; gap:10px; margin:46px 0 18px; }
   .section-title i{ color:var(--accent); font-size:1rem; }
@@ -107,6 +145,21 @@
     padding:2px 9px; border-radius:999px;
   }
   .section-title::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+  .syllabus-box{
+    border:1px solid var(--line); border-radius:8px; background:var(--panel);
+    margin:0 0 18px; padding:18px 18px 14px;
+  }
+  .syllabus-box h3{
+    margin:0 0 12px; font-family:var(--mono); font-size:0.86rem; color:var(--ink);
+  }
+  .syllabus-box .unit-block{ margin-bottom:12px; }
+  .syllabus-box .unit-block strong{
+    display:block; margin-bottom:6px; font-family:var(--mono); font-size:0.78rem; color:var(--accent);
+  }
+  .syllabus-box p{
+    margin:0; color:var(--muted); line-height:1.6; font-size:0.88rem;
+  }
 
   /* ---------- git log ---------- */
   .git-log{
@@ -241,21 +294,87 @@
     </div>
   </div>
 
+  <div class="section-title"><i class="fas fa-file-lines"></i><h2>Unit PPTs & Notes</h2><span class="count">5 units</span></div>
+  <div class="study-grid">
+    <div class="unit-card">
+      <div class="unit-head">Unit 1 <span>6 hrs</span></div>
+      <div class="unit-body">
+        <ul>
+          <li><a href="https://drive.google.com/file/d/1fSk1c01sNyBtbfPU32deYmmI8Y_iwLdp/view?usp=sharing" target="_blank"><i class="fas fa-file-powerpoint"></i> PPT</a></li>
+          <li><a href="https://drive.google.com/file/d/1pCCMWzfkM7lHEDffw253N-73kbT3KQ-r/view?usp=sharing" target="_blank"><i class="fas fa-file-powerpoint"></i> PPT- Characteristics of SRS</a></li>
+          <li><a href="https://drive.google.com/file/d/1_hIjQcxSN120WqH0-bl89umd_XEDZqcp/view?usp=drive_link" target="_blank"><i class="fas fa-file-lines"></i> Notes</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="unit-card disabled">
+      <div class="unit-head">Unit 2 <span>6 hrs</span></div>
+      <div class="unit-body">
+        <ul>
+          <li><a href="https://www.geeksforgeeks.org/solid-principles-oops/" target="_blank"><i class="fas fa-file-powerpoint"></i> PPT</a></li>
+          <li><a href="https://www.geeksforgeeks.org/software-design-principles/" target="_blank"><i class="fas fa-file-lines"></i> Notes</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="unit-card disabled">
+      <div class="unit-head">Unit 3 <span>6 hrs</span></div>
+      <div class="unit-body">
+        <ul>
+          <li><a href="https://git-scm.com/doc" target="_blank"><i class="fas fa-file-powerpoint"></i> PPT</a></li>
+          <li><a href="https://www.atlassian.com/git/tutorials" target="_blank"><i class="fas fa-file-lines"></i> Notes</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="unit-card disabled">
+      <div class="unit-head">Unit 4 <span>6 hrs</span></div>
+      <div class="unit-body">
+        <ul>
+          <li><a href="https://docs.github.com/en/actions" target="_blank"><i class="fas fa-file-powerpoint"></i> PPT</a></li>
+          <li><a href="https://www.jenkins.io/doc/book/" target="_blank"><i class="fas fa-file-lines"></i> Notes</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="unit-card disabled">
+      <div class="unit-head">Unit 5 <span>6 hrs</span></div>
+      <div class="unit-body">
+        <ul>
+          <li><a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test" target="_blank"><i class="fas fa-file-powerpoint"></i> PPT</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/dotnet/core/testing/" target="_blank"><i class="fas fa-file-lines"></i> Notes</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <div class="section-title"><i class="fas fa-code-commit"></i><h2>Chapter Topics</h2><span class="count">12 commits</span></div>
-  <ul class="git-log">
-    <li><a class="commit-row" href="#" target="_blank"><span class="node"></span><span class="hash">a3f9c1e</span><span class="msg">Introduction to Software Engineering</span><span class="unit-no">Chapter 01</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">7d2b840</span><span class="msg">Software Process Models — Waterfall, Iterative, Spiral</span><span class="unit-no">Chapter 02</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">f18e6aa</span><span class="msg">Agile Methodologies & Scrum</span><span class="unit-no">Chapter 03</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">c604d7b</span><span class="msg">Requirements Engineering & SRS</span><span class="unit-no">Chapter 04</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">9b1a2f3</span><span class="msg">Software Design Principles</span><span class="unit-no">Chapter 05</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">e5c0891</span><span class="msg">UML & Object-Oriented Modeling</span><span class="unit-no">Chapter 06</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">2af73dc</span><span class="msg">Design Patterns</span><span class="unit-no">Chapter 07</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">b8e441f</span><span class="msg">Software Architecture & Styles</span><span class="unit-no">Chapter 08</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">d02c9a7</span><span class="msg">Software Testing Fundamentals</span><span class="unit-no">Chapter 09</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">61fbe23</span><span class="msg">Software Project Management & Estimation</span><span class="unit-no">Chapter 10</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">a94d6b0</span><span class="msg">Software Quality Assurance & Metrics</span><span class="unit-no">Chapter 11</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-    <li><a class="commit-row disabled" href="#" target="_blank"><span class="node"></span><span class="hash">3ff10ec</span><span class="msg">Maintenance, Configuration Management & DevOps</span><span class="unit-no">Chapter 12</span><i class="fas fa-arrow-up-right-from-square goto"></i></a></li>
-  </ul>
+
+  <div class="syllabus-box">
+    <h3>Syllabus Overview</h3>
+
+    <div class="unit-block">
+      <strong>Unit 1 — Introduction to Software Engineering (6 hours)</strong>
+      <p>Definition and importance of software engineering, SDLC models (Waterfall, Agile, Spiral, etc.), characteristics of good software, challenges in software development, software requirement specification (SRS), IEEE 830 standards, requirements gathering and analysis, software design principles, abstraction, modularity, and reusability.</p>
+    </div>
+
+    <div class="unit-block">
+      <strong>Unit 2 — Design Principles & Software Design (6 hours)</strong>
+      <p>SOLID principles: Single Responsibility, Open-Closed, Liskov Substitution, Interface Segregation, Dependency Inversion; DRY principle; high-level design (HLD) objectives and components; low-level design (LLD) detailing HLD, focus on algorithms and data structures; workflow from SRS to HLD and LLD.</p>
+    </div>
+
+    <div class="unit-block">
+      <strong>Unit 3 — Version Control & Agile Practices (6 hours)</strong>
+      <p>Introduction to version control systems, importance of VCS and Git, Git essentials including clone, commit, push, pull, branch, and merge; advanced Git usage such as resolving merge conflicts and Git reset (soft and hard); introduction to Jira, backlog management, user stories, tasks, and subtasks.</p>
+    </div>
+
+    <div class="unit-block">
+      <strong>Unit 4 — CI/CD, Clean Code & Code Review (6 hours)</strong>
+      <p>CI/CD overview, importance in modern software development, tools such as GitHub Actions and Jenkins, setting up automated build pipelines, monitoring build status, clean code practices, coding standards, refactoring techniques, pair programming, and mock code review sessions.</p>
+    </div>
+
+    <div class="unit-block">
+      <strong>Unit 5 — Testing & Quality Assurance (6 hours)</strong>
+      <p>Unit testing and its importance, testing tools like xUnit and NUnit, writing test cases, mocking and dependency injection in tests, testing standards and best practices such as code coverage and regression testing.</p>
+    </div>
+  </div>
+
 </div>
 
   <div class="section-title"><i class="fas fa-flask"></i><h2>Lab Exercises</h2><span class="count">12 open</span></div>

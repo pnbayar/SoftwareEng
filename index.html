@@ -411,24 +411,6 @@
     </div>
 
     <div class="lab-card disabled">
-      <div class="file-bar"><span class="filename"><i class="fab fa-python"></i>patterns/singleton.py</span><span class="tag">Creational</span></div>
-      <div class="body">
-        <p class="desc">Implement the Singleton and Factory patterns; compare instantiation control vs. object creation flexibility.</p>
-        <div class="diffstat"><span class="add-txt">+38</span><span class="del-txt">−6</span><span class="bar"><span class="a" style="width:86%"></span><span class="d" style="width:14%"></span></span></div>
-        <div class="code-box">
-          <div class="diff-head">+ NEW FILE · 38 lines</div>
-          <pre class="language-python"><code class="language-python">class Singleton:
-    _instance = None
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance</code></pre>
-        </div>
-        <a href="SE/singleton_factory.py" class="btn-view" download><i class="fas fa-download"></i> View file</a>
-      </div>
-    </div>
-
-    <div class="lab-card disabled">
       <div class="file-bar"><span class="filename"><i class="fab fa-python"></i>patterns/observer.py</span><span class="tag">Behavioral</span></div>
       <div class="body">
         <p class="desc">Build a publish–subscribe notification system using the Observer pattern.</p>

@@ -246,6 +246,40 @@
   .btn-view:hover{ border-color:var(--accent); color:var(--accent); }
   .lab-card .body > .btn-view{ margin-top:auto; }
 
+  /* ---------- assignment ---------- */
+  .assign-box{
+    border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px;
+    background:var(--panel); padding:20px 22px; margin-bottom:18px;
+  }
+  .assign-meta{
+    display:flex; flex-wrap:wrap; gap:8px 18px; font-family:var(--mono); font-size:0.76rem;
+    color:var(--muted); margin-bottom:14px;
+  }
+  .assign-meta strong{ color:var(--ink); }
+  .assign-meta .due{ color:var(--del); font-weight:600; }
+  .assign-box p{ margin:0 0 12px; font-size:0.88rem; line-height:1.6; color:var(--ink); }
+  .assign-box code{
+    font-family:var(--mono); font-size:0.8rem; background:#f6f8fa; border:1px solid var(--line);
+    padding:1px 5px; border-radius:4px;
+  }
+  .case-study{
+    background:var(--accent-bg); border-radius:6px; padding:12px 14px; margin:0 0 4px;
+  }
+  .case-study p{ margin:0; }
+  .task-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:14px; margin-bottom:18px;
+  }
+  .task-grid .lab-card .body p.desc{ color:var(--ink); margin:0; }
+  .task-grid .tag.github{ background:var(--add-bg); color:var(--add); }
+  .eval-table{
+    width:100%; border-collapse:collapse; font-size:0.86rem; background:var(--panel);
+    border:1px solid var(--line); border-radius:8px; overflow:hidden;
+  }
+  .eval-table th, .eval-table td{ padding:10px 14px; border-bottom:1px solid var(--line); text-align:left; }
+  .eval-table th{ background:#f6f8fa; font-family:var(--mono); font-size:0.76rem; }
+  .eval-table td:last-child, .eval-table th:last-child{ text-align:right; width:80px; font-family:var(--mono); }
+  .eval-table tr:last-child td{ border-bottom:none; font-weight:600; }
+
   footer{
     text-align:center; margin-top:60px; font-family:var(--mono); font-size:0.75rem; color:var(--muted);
   }
@@ -295,6 +329,61 @@
       <p><strong>Note:</strong> Please use your <strong>Nitte email ID</strong> to access the Google Drive files.</p>
     </div>
   </div>
+
+  <div class="section-title"><i class="fas fa-clipboard-list"></i><h2>Assignment</h2><span class="count">choose 1 of 7</span></div>
+  <div class="assign-box">
+    <div class="assign-meta">
+      <span><strong>Software Engineering (24PCA402)</strong></span>
+      <span>BCA 4th Semester</span>
+      <span>Max. marks: <strong>10</strong></span>
+      <span class="due"><i class="fas fa-calendar-day"></i> Deadline: 26/10/2026</span>
+    </div>
+    <p><strong>Instructions:</strong> Choose <strong>any one</strong> task below and complete it individually, using the case study. Submit one PDF named <code>&lt;RegNo&gt;_SE_Assignment.pdf</code>, and add your GitHub link for Tasks 3, 5, 6 and 7.</p>
+    <div class="case-study">
+      <p><strong>Case study — Campus Canteen Pre-Order System:</strong> Students pre-order food from a daily menu, pay online and collect the order in a chosen 15-minute pickup slot (maximum 40 orders per slot). Staff update the menu and stock, view orders per slot and mark orders ready. An admin views daily sales reports.</p>
+    </div>
+  </div>
+
+  <div class="task-grid">
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-file-lines"></i>Task 1 · SRS</span><span class="tag">Unit 1</span></div>
+      <div class="body"><p class="desc">Write an SRS following IEEE 830 with at least 8 functional and 5 measurable non-functional requirements. Justify your choice of SDLC model.</p></div>
+    </div>
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-diagram-project"></i>Task 2 · HLD and LLD</span><span class="tag">Unit 2</span></div>
+      <div class="body"><p class="desc">Draw the high-level component diagram. Then give the class diagram and pseudocode for <em>Place Order</em>, showing where each SOLID principle and DRY are applied.</p></div>
+    </div>
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-code-branch"></i>Task 3 · Git workflow</span><span class="tag github"><i class="fab fa-github"></i> Unit 3</span></div>
+      <div class="body"><p class="desc">Build the menu module in a GitHub repository using 3 feature branches and at least 10 commits. Create and resolve a merge conflict, and explain <code>git reset --soft</code> versus <code>--hard</code>, with screenshots.</p></div>
+    </div>
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-list-check"></i>Task 4 · Agile backlog</span><span class="tag">Unit 3</span></div>
+      <div class="body"><p class="desc">In Jira or a spreadsheet, write 10 user stories with acceptance criteria and story points. Plan a two-week sprint and break two stories into tasks and subtasks.</p></div>
+    </div>
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-gears"></i>Task 5 · CI pipeline</span><span class="tag github"><i class="fab fa-github"></i> Unit 4</span></div>
+      <div class="body"><p class="desc">Implement <code>calculate_total()</code> in Python (5% GST, 10% discount above ₹300). Add a GitHub Actions workflow that runs tests on every push, and show screenshots of one failing and one passing run.</p></div>
+    </div>
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fas fa-broom"></i>Task 6 · Code review &amp; refactoring</span><span class="tag github"><i class="fab fa-github"></i> Unit 4</span></div>
+      <div class="body"><p class="desc">Write the order module, then review a classmate’s code with at least 6 comments on clean-code issues. Show three refactorings as before-and-after code, with behaviour unchanged.</p></div>
+    </div>
+    <div class="lab-card">
+      <div class="file-bar"><span class="filename"><i class="fab fa-python"></i>Task 7 · Unit testing</span><span class="tag github"><i class="fab fa-github"></i> Unit 5</span></div>
+      <div class="body"><p class="desc">Write at least 10 PyTest tests for the order module, including boundary cases (₹300, the 40th and 41st order). Mock the payment gateway and report coverage of 80% or more using <code>pytest-cov</code>.</p></div>
+    </div>
+  </div>
+
+  <table class="eval-table">
+    <thead><tr><th>Evaluation criterion</th><th>Marks</th></tr></thead>
+    <tbody>
+      <tr><td>Correctness and completeness of the work</td><td>5</td></tr>
+      <tr><td>Application of the relevant SE concept (justification, principles)</td><td>3</td></tr>
+      <tr><td>Presentation, clarity and viva</td><td>2</td></tr>
+      <tr><td>Total</td><td>10</td></tr>
+    </tbody>
+  </table>
 
   <div class="section-title"><i class="fas fa-file-lines"></i><h2>Unit PPTs & Notes</h2><span class="count">5 units</span></div>
   <div class="study-grid">
@@ -380,8 +469,6 @@
       <p>Unit testing and its importance, testing tools like xUnit and NUnit, writing test cases, mocking and dependency injection in tests, testing standards and best practices such as code coverage and regression testing.</p>
     </div>
   </div>
-
-</div>
 
   <div class="section-title"><i class="fas fa-flask"></i><h2>Lab Exercises</h2><span class="count">12 open</span></div>
   <div class="lab-grid">

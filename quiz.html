@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>SE Viva Quiz · 24PCA502</title>
+<style>
+  :root{
+    --paper:#f4f6fb; --panel:#ffffff; --ink:#1b1f24; --muted:#6c7380; --line:#e1e4e8;
+    --accent:#0056cc; --accent-bg:#e8f0fd; --add:#1a7f37; --del:#cf222e; --del-bg:#fdeceb;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:20px 16px 60px; background:var(--paper); color:var(--ink);
+    font-family:-apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size:16px;
+  }
+  .wrap{max-width:640px; margin:0 auto;}
+  .header{
+    background:linear-gradient(135deg, #007bff 0%, #0056cc 100%); color:#fff;
+    border-radius:10px; padding:18px 20px; margin-bottom:16px;
+  }
+  .header .code{font-size:0.8rem; opacity:0.85; letter-spacing:0.04em;}
+  .header h1{margin:4px 0 0; font-size:1.35rem;}
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:18px 20px; margin-bottom:14px;
+  }
+  label{display:block; font-weight:600; font-size:0.9rem; margin:0 0 6px;}
+  input[type=text]{
+    width:100%; padding:11px 12px; font-size:1rem; border:1px solid var(--line);
+    border-radius:6px; margin-bottom:14px;
+  }
+  input[type=text]:focus{outline:2px solid var(--accent); border-color:transparent;}
+  .unit{
+    display:inline-block; font-size:0.72rem; font-weight:600; color:var(--accent);
+    background:var(--accent-bg); padding:2px 8px; border-radius:4px; margin-bottom:8px;
+  }
+  .qtext{margin:0 0 12px; line-height:1.5; font-weight:500;}
+  .option{
+    display:flex; gap:10px; align-items:flex-start; padding:10px 12px; margin-bottom:8px;
+    border:1px solid var(--line); border-radius:6px; cursor:pointer; font-weight:400; line-height:1.4;
+  }
+  .option input{margin-top:3px; flex-shrink:0;}
+  .option:has(input:checked){border-color:var(--accent); background:var(--accent-bg);}
+  button{
+    width:100%; padding:13px; font-size:1rem; font-weight:600; color:#fff; background:var(--accent);
+    border:none; border-radius:6px; cursor:pointer;
+  }
+  button:disabled{opacity:0.6; cursor:default;}
+  .error{
+    display:none; background:var(--del-bg); color:var(--del); border:1px solid var(--del);
+    border-radius:6px; padding:10px 12px; margin-bottom:14px; font-size:0.9rem;
+  }
+  .muted{color:var(--muted); font-size:0.9rem; line-height:1.5; margin:0 0 14px;}
+  .score{font-size:2.4rem; font-weight:700; color:var(--add); margin:6px 0;}
+  .hidden{display:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="code">24PCA502 · BCA 5th Semester · NIPE</div>
+    <h1>Software Engineering — Viva Quiz</h1>
+  </div>
+
+  <div id="error" class="error"></div>
+
+  <!-- Step 1: details -->
+  <div id="start" class="card">
+    <p class="muted">Enter your details to get 5 questions, one from each unit. You can submit only once.</p>
+    <label for="name">Full name</label>
+    <input type="text" id="name" autocomplete="name">
+    <label for="usn">USN</label>
+    <input type="text" id="usn" autocomplete="off" autocapitalize="characters">
+    <button id="startBtn" onclick="start()">Start quiz</button>
+  </div>
+
+  <!-- Step 2: questions -->
+  <div id="quiz" class="hidden">
+    <div id="questions"></div>
+    <button id="submitBtn" onclick="submit()">Submit answers</button>
+  </div>
+
+  <!-- Step 3: done -->
+  <div id="done" class="card hidden">
+    <h2 style="margin:0 0 6px; font-size:1.15rem;">Answers submitted</h2>
+    <div id="scoreLine"></div>
+    <p class="muted" style="margin:0;">Your answers have been recorded. Please show this screen to your teacher.</p>
+  </div>
+</div>
+
+<script>
+  // Apps Script web app that scores answers and records them in the Google Sheet
+  const API_URL = 'https://script.google.com/macros/s/AKfycbzRJ6vatorkOA9EzZL0ih_3QGABFt0sr54owEEz2LmakWlJUlLSictXXplJInf4pQqT/exec';
+
+  let usn = '';
+  let questions = [];
+
+  // Sent as text/plain so the browser makes a simple request with no CORS preflight.
+  async function callApi(body) {
+    let res;
+    try {
+      res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(body) });
+    } catch (e) {
+      throw new Error('Could not reach the server. Check your internet connection and try again.');
+    }
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error);
+    return data;
+  }
+
+  function showError(err) {
+    const box = document.getElementById('error');
+    box.textContent = (err && err.message) ? err.message : String(err);
+    box.style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+
+  function clearError() {
+    document.getElementById('error').style.display = 'none';
+  }
+
+  function start() {
+    clearError();
+    const name = document.getElementById('name').value.trim();
+    usn = document.getElementById('usn').value.trim().toUpperCase();
+    if (!name || !usn) { showError('Please enter your name and USN.'); return; }
+
+    const btn = document.getElementById('startBtn');
+    btn.disabled = true; btn.textContent = 'Loading…';
+    callApi({ action: 'start', name: name, usn: usn })
+      .then(data => {
+        questions = data.questions;
+        renderQuestions();
+        document.getElementById('start').classList.add('hidden');
+        document.getElementById('quiz').classList.remove('hidden');
+      })
+      .catch(err => {
+        showError(err);
+        btn.disabled = false; btn.textContent = 'Start quiz';
+      });
+  }
+
+  function renderQuestions() {
+    const container = document.getElementById('questions');
+    container.innerHTML = '';
+    questions.forEach((q, i) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const unit = document.createElement('span');
+      unit.className = 'unit';
+      unit.textContent = 'Q' + (i + 1) + ' · Unit ' + q.unit;
+      card.appendChild(unit);
+
+      const text = document.createElement('p');
+      text.className = 'qtext';
+      text.textContent = q.text;
+      card.appendChild(text);
+
+      ['a', 'b', 'c', 'd'].forEach((letter, j) => {
+        const label = document.createElement('label');
+        label.className = 'option';
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = q.id;
+        radio.value = letter;
+        const span = document.createElement('span');
+        span.textContent = letter + ') ' + q.options[j];
+        label.appendChild(radio);
+        label.appendChild(span);
+        card.appendChild(label);
+      });
+
+      container.appendChild(card);
+    });
+  }
+
+  function submit() {
+    clearError();
+    const answers = {};
+    let unanswered = 0;
+    questions.forEach(q => {
+      const picked = document.querySelector('input[name="' + q.id + '"]:checked');
+      if (picked) answers[q.id] = picked.value; else unanswered++;
+    });
+    if (unanswered) { showError('Please answer all 5 questions before submitting.'); return; }
+    if (!confirm('Submit your answers? You cannot change them afterwards.')) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = 'Submitting…';
+    callApi({ action: 'submit', usn: usn, answers: answers })
+      .then(data => {
+        const result = data.result;
+        document.getElementById('quiz').classList.add('hidden');
+        document.getElementById('done').classList.remove('hidden');
+        if (result.score !== undefined) {
+          const line = document.getElementById('scoreLine');
+          line.className = 'score';
+          line.textContent = result.score + ' / ' + result.total;
+        }
+        window.scrollTo(0, 0);
+      })
+      .catch(err => {
+        showError(err);
+        btn.disabled = false; btn.textContent = 'Submit answers';
+      });
+  }
+</script>
+</body>
+</html>

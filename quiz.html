@@ -100,14 +100,16 @@
   // Apps Script web app that scores answers and records them in the Google Sheet
   const API_URL = 'https://script.google.com/macros/s/AKfycbzRJ6vatorkOA9EzZL0ih_3QGABFt0sr54owEEz2LmakWlJUlLSictXXplJInf4pQqT/exec';
 
-  // The start form stays hidden until this time (IST)
+  // Open for a short trial window today, then hidden until OPENS_AT (times in IST)
+  const TRIAL_CLOSES_AT = new Date('2026-10-23T12:45:00+05:30');
   const OPENS_AT = new Date('2026-10-26T09:00:00+05:30');
 
   let usn = '';
   let questions = [];
 
   function isOpen() {
-    return Date.now() >= OPENS_AT.getTime();
+    const now = Date.now();
+    return now < TRIAL_CLOSES_AT.getTime() || now >= OPENS_AT.getTime();
   }
 
   if (!isOpen()) {

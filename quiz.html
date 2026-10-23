@@ -66,6 +66,12 @@
 
   <div id="error" class="error"></div>
 
+  <!-- Shown instead of the quiz until OPENS_AT -->
+  <div id="closed" class="card hidden">
+    <h2 style="margin:0 0 6px; font-size:1.15rem;">The quiz is not open yet</h2>
+    <p class="muted" style="margin:0;">It opens on <strong id="opensText"></strong>. Please come back then.</p>
+  </div>
+
   <!-- Step 1: details -->
   <div id="start" class="card">
     <p class="muted">Enter your details to get 5 questions, one from each unit. You can submit only once.</p>
@@ -94,8 +100,21 @@
   // Apps Script web app that scores answers and records them in the Google Sheet
   const API_URL = 'https://script.google.com/macros/s/AKfycbzRJ6vatorkOA9EzZL0ih_3QGABFt0sr54owEEz2LmakWlJUlLSictXXplJInf4pQqT/exec';
 
+  // The start form stays hidden until this time (IST)
+  const OPENS_AT = new Date('2026-10-26T09:00:00+05:30');
+
   let usn = '';
   let questions = [];
+
+  function isOpen() {
+    return Date.now() >= OPENS_AT.getTime();
+  }
+
+  if (!isOpen()) {
+    document.getElementById('opensText').textContent = 'Monday, 26 October 2026 at 9:00 AM';
+    document.getElementById('start').classList.add('hidden');
+    document.getElementById('closed').classList.remove('hidden');
+  }
 
   // Sent as text/plain so the browser makes a simple request with no CORS preflight.
   async function callApi(body) {
@@ -123,6 +142,7 @@
 
   function start() {
     clearError();
+    if (!isOpen()) { location.reload(); return; }
     const name = document.getElementById('name').value.trim();
     usn = document.getElementById('usn').value.trim().toUpperCase();
     if (!name || !usn) { showError('Please enter your name and USN.'); return; }

@@ -66,10 +66,10 @@
 
   <div id="error" class="error"></div>
 
-  <!-- Shown instead of the quiz until OPENS_AT -->
+  <!-- Shown instead of the quiz while QUIZ_OPEN is false -->
   <div id="closed" class="card hidden">
-    <h2 style="margin:0 0 6px; font-size:1.15rem;">The quiz is not open yet</h2>
-    <p class="muted" style="margin:0;">It opens on <strong id="opensText"></strong>. Please come back then.</p>
+    <h2 style="margin:0 0 6px; font-size:1.15rem;">The quiz is not open</h2>
+    <p class="muted" style="margin:0;">Your teacher will tell you when it opens.</p>
   </div>
 
   <!-- Step 1: details -->
@@ -100,20 +100,17 @@
   // Apps Script web app that scores answers and records them in the Google Sheet
   const API_URL = 'https://script.google.com/macros/s/AKfycbzRJ6vatorkOA9EzZL0ih_3QGABFt0sr54owEEz2LmakWlJUlLSictXXplJInf4pQqT/exec';
 
-  // Open for a short trial window today, then hidden until OPENS_AT (times in IST)
-  const TRIAL_CLOSES_AT = new Date('2026-10-23T12:45:00+05:30');
-  const OPENS_AT = new Date('2026-10-26T09:30:00+05:30');
+  // Set to true to let students start the quiz
+  const QUIZ_OPEN = false;
 
   let usn = '';
   let questions = [];
 
   function isOpen() {
-    const now = Date.now();
-    return now < TRIAL_CLOSES_AT.getTime() || now >= OPENS_AT.getTime();
+    return QUIZ_OPEN;
   }
 
   if (!isOpen()) {
-    document.getElementById('opensText').textContent = 'Monday, 26 October 2026 at 9:30 AM';
     document.getElementById('start').classList.add('hidden');
     document.getElementById('closed').classList.remove('hidden');
   }

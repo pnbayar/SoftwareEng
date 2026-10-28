@@ -87,7 +87,7 @@
   .notice p{margin:0; color:#7a4b48;}
 
   /* ---------- clone buttons ---------- */
-  .quick-links{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:22px 0 8px; }
+  .quick-links{ display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; margin:22px 0 8px; }
   .btn{
     display:flex; align-items:center; justify-content:center; gap:9px;
     padding:12px; border-radius:6px; text-decoration:none; font-weight:600;
@@ -97,6 +97,7 @@
   .btn:hover{ transform:translateY(-1px); filter:brightness(0.97); }
   .btn-syllabus{ background:var(--add); color:#fff; }
   .btn-book{ background:var(--accent); color:#fff; }
+  .btn-qbank{ background:#bf5a00; color:#fff; }
 
   .study-grid{
     display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;
@@ -321,6 +322,7 @@
   <div class="quick-links">
     <a href="https://drive.google.com/file/d/1l3umVNY_VaqnqB_rVmjaxIecTczrKEZ1/view?usp=sharing" target="_blank" class="btn btn-syllabus"><i class="fas fa-file-pdf"></i> Download Syllabus</a>
     <a href="https://www.amazon.in/Software-Engineering-Practitioners-Roger-Pressman/dp/0078022126" target="_blank" class="btn btn-book"><i class="fas fa-book"></i> Course Textbook</a>
+    <a href="https://drive.google.com/file/d/1HvX2z1ojhwG3ji5tv6vBzbURUXd95SSI/view?usp=sharing" target="_blank" class="btn btn-qbank"><i class="fas fa-file-pdf"></i> Question Bank</a>
   </div>
 
   <div class="sections-disabled">
@@ -428,12 +430,14 @@
         </ul>
       </div>
     </div>
-    <div class="unit-card disabled">
+    <div class="unit-card">
       <div class="unit-head">Unit 5 <span>6 hrs</span></div>
       <div class="unit-body">
         <ul>
-          <li><a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test" target="_blank"><i class="fas fa-file-powerpoint"></i> PPT</a></li>
-          <li><a href="https://learn.microsoft.com/en-us/dotnet/core/testing/" target="_blank"><i class="fas fa-file-lines"></i> Notes</a></li>
+          <li><a href="https://drive.google.com/file/d/1QfcnjVfNeTUF4iy-Qeb6dQQlkGo-bD_x/view?usp=sharing" target="_blank"><i class="fas fa-file-powerpoint"></i> PPT</a></li>
+          <li><a href="https://drive.google.com/file/d/1Nli8LzND2lufuqSWx9z5QcwjuImsTZFd/view?usp=sharing" target="_blank"><i class="fas fa-file-powerpoint"></i> PPT - Testing &amp; Quality Assurance</a></li>
+          <li><a href="https://drive.google.com/file/d/1_02zv-q_IKqXafXtdPgDDky1VbP8V3xM/view?usp=sharing" target="_blank"><i class="fas fa-file-powerpoint"></i> PPT - DI in Unit Testing</a></li>
+          <li><a href="https://drive.google.com/file/d/1EarW20JZWkrKkvYd8OJxGb8UILIB2SQZ/view?usp=sharing" target="_blank"><i class="fas fa-file-powerpoint"></i> PPT - xUnit &amp; Code Coverage</a></li>
         </ul>
       </div>
     </div>
